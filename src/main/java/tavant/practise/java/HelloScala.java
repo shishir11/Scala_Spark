@@ -14,4 +14,10 @@ public class HelloScala {
 		List<String> record = scala.showRecord();
 		return record;
 	}
+	
+	public static void main(String[] args) {
+		HelloScala helloScala = new HelloScala();
+		List<String> sparkJobList = helloScala.runSparkJob();
+		sparkJobList.forEach(System.out::println);
+	}
 }

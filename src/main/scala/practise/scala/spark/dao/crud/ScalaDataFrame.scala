@@ -1,4 +1,4 @@
-/*package practise.scala.spark.dao.crud
+package practise.scala.spark.dao.crud
 
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf
@@ -13,7 +13,7 @@ object ScalaDataFrame {
   def main(shishir: Array[String]) {
 
     System.setProperty("hadoop.home.dir", "D:\\Softwares\\winutls")
-    Loading properties file
+    /*Loading properties file*/
     val appConf = ConfigFactory.load();
     val sparkConf = new SparkConf().
       setAppName("Spark SQL APP").
@@ -27,14 +27,14 @@ object ScalaDataFrame {
       .option("dbtable", "person")
       .load()
 
-    // Looks the schema of this DataFrame.
+   /* // Looks the schema of this DataFrame.
     df.printSchema()
 
     // Counts people by age
     val countsByAge = df.groupBy("age").count()
-    countsByAge.show()
+    countsByAge.show()*/
 
     // Saves countsByAge to S3 in the JSON format.
-    countsByAge.write.format("json").save("s3a://...")
+    //countsByAge.write.format("json").save("s3a://...")
   }
-}*/
+}
