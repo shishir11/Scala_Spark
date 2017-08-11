@@ -20,6 +20,11 @@ object SparkPractise {
     val pairs = lines.map(s => (s, 1));
     val counts = pairs.reduceByKey((a, b) => a + b);
     //counts.reduceByKey(func)
-   println("Data is available: "+counts.collect());
+   println("Data print get started...: ");
+   counts.collect().foreach(println);
+   println("Data print of top 100 get started...: ");
+   counts.top(100).foreach(println);
+   println("Data print of top 10 get started...: ");
+   counts.take(10);
   }
 }

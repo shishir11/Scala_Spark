@@ -9,9 +9,10 @@ import org.apache.hadoop.fs.FileSystem
 import org.apache.hadoop.fs.Path;
 import org.apache.spark.sql.SQLContext;
 
+import practise.scala.spark.dao.connection.SparkSqlClass;
 object ScalaDataFrame {
   def main(shishir: Array[String]) {
-
+    val SparkSqlClass = new SparkSqlClass();
     System.setProperty("hadoop.home.dir", "D:\\Softwares\\winutls")
     /*Loading properties file*/
     val appConf = ConfigFactory.load();
@@ -22,17 +23,18 @@ object ScalaDataFrame {
     val sparkContext = new SparkContext(sparkConf);
     val sqlContext = new SQLContext(sparkContext);
     val url = "jdbc:mysql://localhost:3306/sparkdb?user=root;password=root"
+     Class.forName("com.mysql.jdbc.Driver").newInstance;
     val df = sqlContext.read.format("jdbc")
-      .option("url", url)
+      .option("url", url.toString())
       .option("dbtable", "person")
       .load()
 
-   /* // Looks the schema of this DataFrame.
-    df.printSchema()
+    // Looks the schema of this DataFrame.
+    df.printSchema();
 
     // Counts people by age
     val countsByAge = df.groupBy("age").count()
-    countsByAge.show()*/
+    countsByAge.show();
 
     // Saves countsByAge to S3 in the JSON format.
     //countsByAge.write.format("json").save("s3a://...")
