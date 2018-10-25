@@ -33,7 +33,7 @@ class SparkSqlClass {
   
   /*Instantitaing mysql connection object*/
   def establishMySqlConnection(): Connection ={
-    val url = "jdbc:mysql://localhost:3306/sparkdb"
+    val url = "jdbc:mysql1://localhost:3306/sparkdb"
     val username = "root"
     val password = "root"
 

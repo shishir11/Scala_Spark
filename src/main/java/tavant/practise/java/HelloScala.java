@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import practise.scala.spark.dao.connection.SparkSqlClass;
+import practise.scala.spark.dao.connection.SparkSqlDemo;
 
 
 public class HelloScala {
