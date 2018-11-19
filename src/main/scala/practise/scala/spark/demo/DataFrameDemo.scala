@@ -9,7 +9,7 @@ import org.apache.spark.sql.SQLContext
 
 object DataFrameDemo {
   def main(args: Array[String]) {
-    System.setProperty("hadoop.home.dir", "D:\\Softwares\\winutls")
+    System.setProperty("hadoop.home.dir", "D://hadoop-winutils-2.6.0//");
     val appConf = ConfigFactory.load()
     val conf = new SparkConf().
       setAppName("Word Count").
@@ -28,7 +28,7 @@ object DataFrameDemo {
     df.select("name").show();
 
     // Select everybody, but increment the age by 1
-    // df.select("name", $"age" + 1).show();
+   // df.select("name", $"age" + 1).show();
 
     df.distinct().show();
 
