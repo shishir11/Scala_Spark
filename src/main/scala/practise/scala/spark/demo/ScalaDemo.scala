@@ -5,7 +5,8 @@ import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 
 object ScalaDemo {
-  def main(args: Array[String]) {
+
+ def main(args: Array[String]) {
     System.setProperty("hadoop.home.dir", "D:\\Softwares\\winutls")
     val appConf = ConfigFactory.load()
     val conf = new SparkConf().
@@ -33,13 +34,13 @@ object ScalaDemo {
     println(accum.value);
     // Perform map and reduce
     val lines = sc.textFile("src/main/resources/application.conf");
-   /* val Lenght = lines.map(s => s.length);
+    /* val Lenght = lines.map(s => s.length);
     val totalLength = Lenght.reduce((a, b) => a + b);
     println(totalLength);*/
 
     val counts = lines.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey(_ + _)
     counts.collect();
-    
+
     println(counts);
   }
 }

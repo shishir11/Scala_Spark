@@ -22,7 +22,7 @@ object SparkSQLClass {
 
     val url = "jdbc:mysql://localhost:3306/mysql"
     val username = "root"
-    val password = ""
+    val password = "root"
 
     Class.forName("com.mysql.jdbc.Driver").newInstance;
     val con = DriverManager.getConnection(url, username, password);
