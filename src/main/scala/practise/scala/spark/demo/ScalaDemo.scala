@@ -3,17 +3,19 @@ package practise.scala.spark.demo
 import com.typesafe.config.ConfigFactory
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
-
+/**
+ * https://data-flair.training/blogs/spark-rdd-operations-transformations-actions/
+ */
 object ScalaDemo {
 
+   def initiateSparkContext(): SparkContext = {
+    val sparkConnection = new practise.scala.spark.connection.Connection();
+    return sparkConnection.getSparkContext();
+  }
+   
  def main(args: Array[String]) {
-    System.setProperty("hadoop.home.dir", "D:\\Softwares\\winutls")
-    val appConf = ConfigFactory.load()
-    val conf = new SparkConf().
-      setAppName("Word Count").
-      setMaster(appConf.getConfig("dev").getString("executionmode")).
-      set("spark.executor.memory", "1g");
-    val sc = new SparkContext(conf);
+   
+    val sc = initiateSparkContext;
     println("Spark context loading succesfully: " + sc.getClass.toString());
     //  sc.stop();
     val data = Array(1, 2, 3, 4, 5);

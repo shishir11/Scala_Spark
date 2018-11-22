@@ -1,24 +1,16 @@
-package tavant.practise.java;
+/*package tavant.practise.java;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import practise.scala.spark.dao.connection.SparkSqlClass;
-import practise.scala.spark.dao.connection.SparkSqlDemo;
-
-
 public class HelloScala {
-	
-	ArrayList<String> arrayList = new ArrayList<String>();
-	public  List<String> runSparkJob() {
-		SparkSqlClass scala = new SparkSqlClass();
-		List<String> record = scala.showRecord();
-		return record;
+
+	public List<String> runSparkJob() {
+		return new SparkSqlClass().showRecord();
 	}
-	
+
 	public static void main(String[] args) {
-		HelloScala helloScala = new HelloScala();
-		List<String> sparkJobList = helloScala.runSparkJob();
-		sparkJobList.forEach(System.out::println);
+		new HelloScala().runSparkJob().parallelStream().forEach(System.out::println);
 	}
 }
+*/

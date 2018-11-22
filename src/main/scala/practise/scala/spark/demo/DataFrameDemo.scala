@@ -1,38 +1,41 @@
 package practise.scala.spark.demo
-import practise.scala.spark.dao.connection.SparkSqlClass;
-import org.apache.spark.SparkContext
-import java.sql.DriverManager
-import java.sql.Connection
-import com.typesafe.config.ConfigFactory
-import org.apache.spark.SparkConf
+
 import org.apache.spark.sql.SQLContext
 
-object DataFrameDemo {
-  
-  def main(args: Array[String]) {
-    
-    val sc = new practise.scala.spark.connection.Connection();
-    val sqlContext = new SQLContext(sc.getSparkContext());
-    val sparkSession = sqlContext.sparkSession;
 
+object DataFrameDemo {
+
+  def main(args: Array[String]) {
+
+    val sc = new practise.scala.spark.connection.Connection();
+    val spark = sc.getSparkContext();
+    val sqlContext = new SQLContext(spark);
+    val sparkSession = sqlContext.sparkSession;
+    import sparkSession.implicits._
     val df = sparkSession.read.json("src/main/resources/people.json");
     //Printing schema
     df.printSchema();
 
     //select specific column
     df.select("name").show();
-
-    // Select everybody, but increment the age by 1
-    // df.select("name", $"age" + 1).show();
-
+   
+    
+    println(" Select everybody, but increment the age by 1");
+    import org.apache.spark.sql.functions._
+   // df.select(df("name"), df("age") + 1).show();
+    
+   // df.select("name").filter("age")
     df.distinct().show();
 
     // Select people older than 21
-    //df.filter($"age" > 21).show()
+   // df.filter(df("age") > 21).show()
 
     // Count people by age
     // df.groupBy("age").count().show();
-
+     
+    println("Displaying average name and age.......");
+    df.select("name", "email").agg(avg($"creditcard")).as("creditcard").show();
+     
     // Register the DataFrame as a SQL temporary view
     //The sql function on a SparkSession enables applications to run SQL queries programmatically and returns the result as a DataFrame.
     df.createOrReplaceTempView("people")
@@ -74,9 +77,9 @@ object DataFrameDemo {
     val departmentWithEmployees4 = new DepartmentWithEmployees(department4, Seq(employee2, employee3))
 
     val employeList: List[Employee] = List(employee1, employee2, employee3, employee4);
-    
-  //  sc.parallelize(employeList)
-    //  sparkSession.createDataFrame(employeList,Employee);
+
+    //  sc.parallelize(employeList)
+    //   sparkSession.createDataFrame(employeList,Employee);
 
   }
 
