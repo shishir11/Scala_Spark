@@ -11,7 +11,7 @@ class Connection {
       val conf = new SparkConf().
       setAppName("Word Count").
       setMaster(appConf.getConfig("dev").getString("executionmode")).
-      set("spark.executor.memory", "1g");
+      set("spark.executor.memory", "1g").set("spark.driver.allowMultipleContexts","true");
       return  new SparkContext(conf);
     
   }

@@ -8,16 +8,17 @@ import com.typesafe.config.ConfigFactory
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.SQLContext
 
+ 
 /**
- * https://stackoverflow.com/questions/44594134/value-tods-is-not-a-member-of-org-apache-spark-rdd-rdd
  * https://community.hortonworks.com/questions/87441/error-only-one-sparkcontext-may-be-running-in-this.html
- * https://stackoverflow.com/questions/34879414/multiple-sparkcontext-detected-in-the-same-jvm
+ * https://stackoverflow.com/questions/34879414/multiple-sparkcontext-detected-iarkan-the-same-jvm
  * https://data-flair.training/blogs/spark-sql-optimization/
  * https://data-flair.training/blogs/apache-spark-rdd-vs-dataframe-vs-dataset/
  * https://data-flair.training/blogs/apache-spark-performance-tuning/
  * https://data-flair.training/blogs/apache-spark-performance-tuning/
  * https://data-flair.training/blogs/fault-tolerance-in-apache-spark/
  * https://spark.apache.org/docs/2.2.1/running-on-mesos.html
+ * https://stackoverflow.com/questions/44594134/value-tods-is-not-a-member-of-org-apache-spark-rdd-rdd
  */
 case class Employee(name: String, age: Int, departmentId: Int, salary: Double)
 case class Department(id: Int, name: String)
@@ -70,12 +71,24 @@ object DatasetDemo {
     println("Creating of dataset from the dataframe...");
     val inputSeq = Seq(Company("ABC", 1998, 310), Company("XYZ", 1983, 904), Company("NOP", 2005, 83));
     val df = sparkContext.parallelize(inputSeq).toDF();
+    
+    val inputSeq1 = Seq(Company("Tavant Tech", 1998, 310), Company("ITC", 1983, 904), Company("GlobalLogic", 2005, 83));
+    val df1 = sparkContext.parallelize(inputSeq1).toDF();
+    
     println("Providing a type safety including a schema...");
     val companyDS = df.as[Company];
     companyDS.show();
+    
+    val nextCompanyDS = df1.as[Company];
+    println("Displaying the record using analyzed attribute");
+    companyDS.union(nextCompanyDS).queryExecution.analyzed.foreach(println);
+    
+    println("filtering null value providing a condition as a expression....");
+    companyDS.filter("foundingYear is not null").as[Company].show();
   }
   def main(arr: Array[String]): Unit = {
 
-    performJoinOnDataset();
+   // performJoinOnDataset();
+    performCommonDatasetOperation;
   }
 }
