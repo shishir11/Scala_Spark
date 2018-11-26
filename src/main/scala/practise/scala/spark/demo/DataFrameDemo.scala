@@ -2,7 +2,6 @@ package practise.scala.spark.demo
 
 import org.apache.spark.sql.SQLContext
 
-
 object DataFrameDemo {
 
   def main(args: Array[String]) {
@@ -12,33 +11,33 @@ object DataFrameDemo {
     val sqlContext = new SQLContext(spark);
     val sparkSession = sqlContext.sparkSession;
     import sparkSession.implicits._
-    val df = sparkSession.read.json("src/main/resources/people.json");
+    val df = sparkSession.read.json("src/main/resources/people_old.json");
     //Printing schema
     df.printSchema();
 
-    //select specific column
+    println("select specific column");
     df.select("name").show();
-   
-    
+
     println(" Select everybody, but increment the age by 1");
     import org.apache.spark.sql.functions._
-   // df.select(df("name"), df("age") + 1).show();
-    
-   // df.select("name").filter("age")
+    df.select(df("name"), df("age") + 1).show();
+
+    df.select($"age" + 2).show();
     df.distinct().show();
 
-    // Select people older than 21
-   // df.filter(df("age") > 21).show()
+    println(" Select people older than 21");
+    df.filter(df("age") > 21).show();
 
-    // Count people by age
-    // df.groupBy("age").count().show();
-     
+    println(" Count people by age");
+    df.groupBy("age").count().show();
+
     println("Displaying average name and age.......");
     df.select("name", "email").agg(avg($"creditcard")).as("creditcard").show();
-     
+
     // Register the DataFrame as a SQL temporary view
-    //The sql function on a SparkSession enables applications to run SQL queries programmatically and returns the result as a DataFrame.
+    println("The sql function on a SparkSession enables applications to run SQL queries programmatically and returns the result as a DataFrame.");
     df.createOrReplaceTempView("people")
+    
     println("Register the DataFrame as a SQL temporary view");
     val sqlDF = sparkSession.sql("SELECT * FROM people")
     sqlDF.show();

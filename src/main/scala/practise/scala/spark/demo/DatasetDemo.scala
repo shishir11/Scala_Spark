@@ -85,6 +85,8 @@ object DatasetDemo {
     
     println("filtering null value providing a condition as a expression....");
     companyDS.filter("foundingYear is not null").as[Company].show();
+    
+    
   }
   def main(arr: Array[String]): Unit = {
 
