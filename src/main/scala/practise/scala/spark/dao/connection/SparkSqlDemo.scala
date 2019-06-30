@@ -1,12 +1,14 @@
 package practise.scala.spark.dao.connection
 
-import org.apache.spark.SparkContext
-import org.apache.spark.SparkConf
-import com.typesafe.config.ConfigFactory
-import org.apache.spark.rdd.JdbcRDD
-import java.sql.{ Connection, DriverManager }
+import java.sql.DriverManager
+
 import org.apache.hadoop.fs.FileSystem
-import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.Path
+import org.apache.spark.SparkConf
+import org.apache.spark.SparkContext
+import org.apache.spark.rdd.JdbcRDD
+
+import com.typesafe.config.ConfigFactory;
 
 object SparkSqlDemo {
 
@@ -21,7 +23,7 @@ object SparkSqlDemo {
       set("spark.executor.memory", "1g");
   }
 
-  /*Instanctitaing SparkContext object*/
+  /*Instanciating SparkContext object*/
   def getSparkContext(): SparkContext = {
     /*Setting required properties*/
     val conf = getConf();
@@ -36,7 +38,8 @@ object SparkSqlDemo {
     val password = "root"
 
     Class.forName("com.mysql.jdbc.Driver").newInstance;
-    return DriverManager.getConnection(url, username, password);
+    return null; //DriverManager.getConnection(url, username, password)
+   // return DriverManager.getConnection(url, username, password);
   }
 
   def showRecord() {

@@ -1,25 +1,29 @@
-package practise.scala.spark.demo
+package practise.scala.spark.dfds
 
+import org.apache.spark.sql.SQLContext
+
+import org.apache.spark.SparkContext
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.types.{ StructField, StructType }
 import org.apache.spark.sql.SQLContext
 
 object DataFrameDemo {
 
-  def main(args: Array[String]) {
+  def empJSONRecord(sparkSession: SparkSession): Unit = {
 
-    val sc = new practise.scala.spark.connection.Connection();
-    val spark = sc.getSparkContext();
-    val sqlContext = new SQLContext(spark);
-    val sparkSession = sqlContext.sparkSession;
     import sparkSession.implicits._
     val df = sparkSession.read.json("src/main/resources/people_old.json");
     //Printing schema
     df.printSchema();
 
     println("select specific column");
-    df.select("name").show();
+    df.select("name", "email", "creditcard", "city", "mac").show();
 
     println(" Select everybody, but increment the age by 1");
+
     import org.apache.spark.sql.functions._
+
+    df.select("name", "age", "email", "creditcard", "city", "mac").filter(df("name").isNotNull);
     df.select(df("name"), df("age") + 1).show();
 
     df.select($"age" + 2).show();
@@ -37,7 +41,7 @@ object DataFrameDemo {
     // Register the DataFrame as a SQL temporary view
     println("The sql function on a SparkSession enables applications to run SQL queries programmatically and returns the result as a DataFrame.");
     df.createOrReplaceTempView("people")
-    
+
     println("Register the DataFrame as a SQL temporary view");
     val sqlDF = sparkSession.sql("SELECT * FROM people")
     sqlDF.show();
@@ -51,11 +55,15 @@ object DataFrameDemo {
     println("Register the DataFrame as a SQL Global Temporary View");
     // Global temporary view is tied to a system preserved database `global_temp`
     sparkSession.sql("SELECT * FROM global_temp.people").show();
+  }
 
-    // Create the case classes for our domain
+  def empCaseClassRecord(spark: SparkContext): Unit = {
+
     case class Department(id: String, name: String)
     case class Employee(firstName: String, lastName: String, email: String, salary: Int)
     case class DepartmentWithEmployees(department: Department, employees: Seq[Employee])
+
+    // Create the case classes for our domain
 
     // Create the Departments
     val department1 = new Department("123456", "Computer Science")
@@ -74,12 +82,22 @@ object DataFrameDemo {
     val departmentWithEmployees2 = new DepartmentWithEmployees(department2, Seq(employee3, employee4))
     val departmentWithEmployees3 = new DepartmentWithEmployees(department3, Seq(employee1, employee4))
     val departmentWithEmployees4 = new DepartmentWithEmployees(department4, Seq(employee2, employee3))
+    
+   // import sqlContext.implicits._
+    
+    val departmentsWithEmployeesSeq1 = Seq(departmentWithEmployees1, departmentWithEmployees2)
+  //  val df1 = departmentsWithEmployeesSeq1.toDF()
 
-    val employeList: List[Employee] = List(employee1, employee2, employee3, employee4);
+    val departmentsWithEmployeesSeq2 = Seq(departmentWithEmployees3, departmentWithEmployees4)
+  //  val df2 = departmentsWithEmployeesSeq2.toDF()
 
-    //  sc.parallelize(employeList)
-    //   sparkSession.createDataFrame(employeList,Employee);
+  }
 
+  def main(args: Array[String]) {
+    val sc = new practise.scala.spark.dao.connection.Connection();
+    val spark = sc.getSparkContext();
+    val sqlContext = new SQLContext(spark);
+    val sparkSession = sqlContext.sparkSession;
   }
 
 }

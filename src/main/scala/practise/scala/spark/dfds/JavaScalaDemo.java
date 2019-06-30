@@ -1,4 +1,4 @@
-package practise.scala.spark.demo;
+package practise.scala.spark.dfds;
 
 import java.util.List;
 

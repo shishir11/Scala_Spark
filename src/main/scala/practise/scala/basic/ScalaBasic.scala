@@ -132,11 +132,21 @@ object ScalaBasic {
     //Optional API using Option and Some
     val bigData: Option[String] = Some("Big Data")
     println(s"value = ${bigData.get}")
-    
+
     val noneValue: Option[String] = None;
     println(s"defaul value is: ${noneValue.getOrElse("AWS")}")
-    
+
     bigData.map(tech => println(s"${tech}"))
     bigData.map(tech => tech.contains("g D")).foreach(println);
+
+    //clouser function in scala
+    var votingAge = 18
+    val isOfVotingAge = (age: Int) => age >= votingAge
+    printResult(isOfVotingAge, 10);
+    
+  }
+
+  def printResult(f: Int => Boolean, x: Int) {
+    println(f(x))
   }
 }

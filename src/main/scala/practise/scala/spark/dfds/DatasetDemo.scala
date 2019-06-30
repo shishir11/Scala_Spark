@@ -1,4 +1,4 @@
-package practise.scala.spark.demo
+package practise.scala.spark.dfds
 
 import practise.scala.spark.dao.connection.SparkSqlClass;
 import org.apache.spark.SparkContext
@@ -29,7 +29,7 @@ case class ResultSet(departmentId: Int, departmentName: String, avgSalary: Doubl
 object DatasetDemo {
 
   def initiateSparkContext(): SparkContext = {
-    val sparkConnection = new practise.scala.spark.connection.Connection();
+    val sparkConnection = new practise.scala.spark.dao.connection.Connection();
     return sparkConnection.getSparkContext();
   }
   def performJoinOnDataset(): Unit = {

@@ -1,8 +1,8 @@
-package practise.scala.spark.demo
+package practise.scala.spark.dfds
 
 object SparkTransformationExample {
   def main(args: Array[String]): Unit = {
-    val sparkConnection = new practise.scala.spark.connection.Connection();
+    val sparkConnection = new practise.scala.spark.dao.connection.Connection();
     val sparkContext = sparkConnection.getSparkContext();
     
     println("Flatmap transformation result....");

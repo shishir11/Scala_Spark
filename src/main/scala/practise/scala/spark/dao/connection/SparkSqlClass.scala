@@ -4,7 +4,8 @@ import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf
 import com.typesafe.config.ConfigFactory
 import org.apache.spark.rdd.JdbcRDD
-import java.sql.{Connection, DriverManager}
+
+import java.sql.DriverManager
 import org.apache.hadoop.fs.FileSystem
 import org.apache.hadoop.fs.Path;
 import scala.collection.JavaConverters._
@@ -38,7 +39,7 @@ class SparkSqlClass {
     val password = "root"
 
     Class.forName("com.mysql.jdbc.Driver").newInstance;
-    return DriverManager.getConnection(url, username, password);
+    return null;//DriverManager.getConnection(url, username, password);
   }
   
   def showRecord() :List[String] = {

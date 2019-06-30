@@ -1,17 +1,7 @@
-package practise.scala.spark.dao.crud
+package com.scala.spark.usecase
 
-import org.apache.spark.SparkContext
-import org.apache.spark.SparkConf
-import com.typesafe.config.ConfigFactory
-import org.apache.spark.rdd.JdbcRDD
-import java.sql.{ Connection, DriverManager }
-import org.apache.hadoop.fs.FileSystem
-import org.apache.hadoop.fs.Path;
-import org.apache.spark.sql.SQLContext;
-
-import practise.scala.spark.dao.connection.SparkSqlClass;
-import org.apache.spark.sql.DataFrameReader
-import org.apache.spark.sql.Dataset
+import org.apache.spark.sql.SQLContext
+import practise.scala.spark.dao.connection.SparkSqlClass
 import org.apache.spark.sql.DataFrame;
 
 object OrderDataAnalysis {
@@ -39,8 +29,6 @@ object OrderDataAnalysis {
 
     val resultOfRightJoinOrderAndOrdeItem = rightJoinOnOrderAndOrdeItem.select("order_date", "order_status", "order_item_quantity", "order_item_subtotal").orderBy("order_date");
     
-    //resultOfRightJoinOrderAndOrdeItem.show();
-
     resultOfRightJoinOrderAndOrdeItem.write.format("com.databricks.spark.csv").save("D:\\tmp\\orders.csv");
 
   }

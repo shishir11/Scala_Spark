@@ -1,4 +1,4 @@
-package practise.scala.spark
+package practise.spark.basic
 
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf
@@ -6,7 +6,7 @@ import com.typesafe.config.ConfigFactory
 
 object RunDemo {
   def main(args: Array[String]) {
-    System.setProperty("hadoop.home.dir", "D:\\Softwares\\winutls")
+    System.setProperty("hadoop.home.dir", "C:\\Temp\bin\\winutls")
     val appConf = ConfigFactory.load()
     val conf = new SparkConf().
       setAppName("Word Count").
@@ -16,11 +16,11 @@ object RunDemo {
     println("Spark context loading succesfully: " + sc.getClass.toString());
     //  sc.stop();
 
-    val textReader = sc.textFile("D:\\Data\\filedemo.txt");
+    val textReader = sc.textFile("C:\\Shishir\\filedemo.txt");
 
     /*It will create Spark RDD Collection*/
     var startTIme = System.currentTimeMillis();
-    val rdd = sc.parallelize("D:\\Data\\filedemo.txt");
+    val rdd = sc.parallelize("C:\\Shishir\\filedemo.txt");
     rdd.foreach(println);
     var endTIme = System.currentTimeMillis();
 
